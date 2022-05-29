@@ -18,7 +18,12 @@ namespace ChatAlerts.ViewModels
         #region Свойства
         private static int MessageID;
         private static MessangerClientAPI API = new MessangerClientAPI();
-        private ObservableCollection<Message> messangeList;
+        private ObservableCollection<Message> _messangeList;
+        public ObservableCollection<Message> messangeList
+        {
+            get => _messangeList;
+            set => Set(ref _messangeList, value);
+        }
         #endregion
         #region Команды
         public ICommand SendMessageCommand { get; }
