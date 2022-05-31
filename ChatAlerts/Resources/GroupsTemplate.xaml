@@ -80,7 +80,7 @@
         <Setter Property="OverridesDefaultStyle"
           Value="true" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
-          Value="Auto" />
+          Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
           Value="Auto" />
         <Setter Property="ScrollViewer.CanContentScroll"
@@ -96,7 +96,7 @@
                          BorderThickness="1"
                          CornerRadius="2">
                         <Border.Background>
-                            <SolidColorBrush Color="#2E2E2E" />
+                            <SolidColorBrush Color="#2F3136" />
                         </Border.Background>
                         <Border.BorderBrush>
                             <SolidColorBrush Color="Transparent" />
@@ -146,7 +146,8 @@
                 <ControlTemplate TargetType="ListBoxItem">
                     <Border x:Name="Border"
                 Padding="2"
-                SnapsToDevicePixels="true">
+                SnapsToDevicePixels="true"
+                            CornerRadius="5">
                         <Border.Background>
                             <SolidColorBrush Color="Transparent" />
                         </Border.Background>
@@ -159,7 +160,7 @@
                                                 Storyboard.TargetProperty="(Panel.Background).
                                                             (SolidColorBrush.Color)">
                                             <EasingColorKeyFrame KeyTime="0"
-                                                         Value="{StaticResource SelectedBackgroundColor}" />
+                                                         Value="LightGray" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -169,7 +170,7 @@
                                                 Storyboard.TargetProperty="(Panel.Background).
                                                                              (SolidColorBrush.Color)">
                                             <EasingColorKeyFrame KeyTime="0"
-                                         Value="{StaticResource SelectedUnfocusedColor}" />
+                                         Value="Gray" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
