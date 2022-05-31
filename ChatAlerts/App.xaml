@@ -9,6 +9,8 @@
                 <ResourceDictionary Source="Resources/GroupsTemplate.xaml"/>
                 <ResourceDictionary Source="Resources/ScrollBarStyle.xaml"/>
                 <ResourceDictionary Source="Resources/MessangesTemplate.xaml"/>
+                <ResourceDictionary Source="Resources/TextBoxTemplate.xaml"/>
+                <ResourceDictionary Source="Resources/SendButton.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
