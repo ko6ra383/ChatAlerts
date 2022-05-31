@@ -25,6 +25,9 @@ namespace ChatAlerts.ViewModels
             set => Set(ref _messangeList, value);
         }
         #endregion
+        #region testlist
+        public List<string> testlist { get; set; } = Enumerable.Range(1, 30).Select(i => $"тестовая строка N{i}").ToList();
+        #endregion
         #region Команды
         public ICommand SendMessageCommand { get; }
         private bool CanSendMessageCommandExecute(object p) => true;
