@@ -60,6 +60,7 @@ namespace ChatAlerts.ViewModels
             var timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
             timer.Tick += Timer_Tick;
             timer.Start();
+            messangeList = new ObservableCollection<Message>();
             #region Команды
             SendMessageCommand = new LambdaCommand(OnSendMessageCommandExecute, CanSendMessageCommandExecute);
             #endregion
