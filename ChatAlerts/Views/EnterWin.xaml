@@ -1,0 +1,47 @@
+﻿<Window x:Class="ChatAlerts.Views.EnterWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatAlerts.Views"
+        mc:Ignorable="d"
+        Title="EnterWin" Height="250" Width="300" WindowStartupLocation="CenterScreen"
+        Background="SlateGray">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.6*" />
+            <RowDefinition  />
+            <RowDefinition Height="0.6*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Авторизация" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid Grid.Row="1" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Bottom"
+                       Margin="10" FontSize="16">Логин</TextBlock>
+            <TextBox Name="loginBox" MinWidth="250"
+                     Grid.Row="0" Grid.Column="1"
+                     Style="{StaticResource MessageTextBoxStyle}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom"
+                       Margin="10" FontSize="16">Пароль</TextBlock>
+             <TextBox Name="passwordBox" MinWidth="250"
+                      Grid.Row="1" Grid.Column="1"
+                      Style="{StaticResource MessageTextBoxStyle}"/>
+
+        </Grid>
+
+
+
+        <Button HorizontalAlignment="Center" Grid.Row="2"
+                IsDefault="True" Click="Accept_Click" MinWidth="60"
+                Margin="10" Style="{StaticResource ApplyButton}"
+                Height="30" Width="40">Войти</Button>
+
+    </Grid>
+</Window>
