@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ChatAlerts.Models;
 using Newtonsoft.Json;
+using ChatAlerts.Models;
 
 namespace ChatAlerts.Services
 {
@@ -21,7 +22,7 @@ namespace ChatAlerts.Services
         }
         public Message GetMessage(int MessageID)
         {
-            WebRequest request = WebRequest.Create("http://localhost:5000/api/Messanger/" + MessageID.ToString());
+            WebRequest request = WebRequest.Create("http://localhost:5000/api/Messanger/Get" + MessageID.ToString());
             request.Method = "GET";
             WebResponse response = request.GetResponse();
             string status = ((HttpWebResponse)response).StatusDescription;
@@ -41,7 +42,7 @@ namespace ChatAlerts.Services
         private static readonly HttpClient client = new HttpClient();
         public async Task<Message> GetMessageAsync(int MessageID)
         {
-            var responseString = await client.GetStringAsync("http://localhost:5000/api/Messanger/" + MessageID.ToString());
+            var responseString = await client.GetStringAsync("http://localhost:5000/api/Messanger/Get" + MessageID.ToString());
             if (responseString != null)
             {
                 Message deserializedMsg = JsonConvert.DeserializeObject<Message>(responseString);
@@ -51,7 +52,7 @@ namespace ChatAlerts.Services
         }
         public bool SendMessage(Message msg)
         {
-            WebRequest request = WebRequest.Create("http://localhost:5000/api/Messanger/");
+            WebRequest request = WebRequest.Create("http://localhost:5000/api/Messanger/SendMessage");
             request.Method = "POST";
             string postData = JsonConvert.SerializeObject(msg);
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
@@ -68,6 +69,26 @@ namespace ChatAlerts.Services
             dataStream.Close();
             response.Close();
             return true;
+        }
+        public bool CheckUser(User user = null)
+        {
+            WebRequest request = WebRequest.Create("http://localhost:5000/api/Messanger/CheckUser");
+            request.Method = "POST";
+            string postData = JsonConvert.SerializeObject(user);
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            request.ContentType = "application/json";
+            request.ContentLength = byteArray.Length;
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+            WebResponse response = request.GetResponse();
+            dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            return bool.Parse(responseFromServer);
         }
     }
 }

@@ -65,7 +65,14 @@ namespace ChatAlerts.ViewModels
             EnterWin enterWindow = new EnterWin();
             if (enterWindow.ShowDialog() == true)
             {
-                if (enterWindow.Password == "12345678")
+                var user = new User()
+                {
+                    ID = 2,
+                    Login = enterWindow.Login,
+                    Password = enterWindow.Password,
+                    IsAdmin = enterWindow.Login == "admin" ? true : false
+                };
+                if (API.CheckUser(user))
                     MessageBox.Show("Авторизация пройдена");
                 else
                     MessageBox.Show("Неверный пароль");

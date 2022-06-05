@@ -33,5 +33,9 @@ namespace ChatAlerts.Views
         {
             get { return passwordBox.Text; }
         }
+        public string Login
+        {
+            get { return loginBox.Text; }
+        }
     }
 }

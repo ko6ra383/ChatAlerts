@@ -2,12 +2,21 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System;
+using System.Linq;
+using AspServer.Data;
+using AspServer.Models;
+
 namespace AspServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class Messanger : ControllerBase
     {
+        private readonly AppDbContext db;
+        public Messanger(AppDbContext db)
+        {
+            this.db = db;
+        }
         static List<Message> ListOfMessages = new List<Message>();
         [HttpGet("{id}")]
         public string Get(int id)
@@ -31,6 +40,15 @@ namespace AspServer.Controllers
             ListOfMessages.Add(msg);
             Console.WriteLine($"Всего сообщений: {ListOfMessages.Count} Посланное сообщение {msg}");
             return new OkResult();
+        }
+
+        [HttpPost]
+        public bool CheckUser([FromBody] User user)
+        {
+            IEnumerable<User> usersList = db.users;
+            var res = usersList.Where(usr => usr.Login == user.Login && usr.Password == user.Password);
+            if (res.Count() != 1) return false;
+            return true;
         }
     }
 }
