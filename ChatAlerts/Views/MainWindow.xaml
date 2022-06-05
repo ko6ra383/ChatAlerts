@@ -6,7 +6,7 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:local="clr-namespace:ChatAlerts" xmlns:vm="clr-namespace:ChatAlerts.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900" Background="#40444B">
+        Title="MainWindow" Height="600" Width="900" Background="#40444B" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>

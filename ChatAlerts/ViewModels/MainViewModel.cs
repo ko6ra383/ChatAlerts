@@ -1,6 +1,7 @@
 ﻿using ChatAlerts.Infrastructure.Commands;
 using ChatAlerts.Models;
 using ChatAlerts.Services;
+using ChatAlerts.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -60,6 +62,18 @@ namespace ChatAlerts.ViewModels
         }
         public MainViewModel()
         {
+            EnterWin enterWindow = new EnterWin();
+            if (enterWindow.ShowDialog() == true)
+            {
+                if (enterWindow.Password == "12345678")
+                    MessageBox.Show("Авторизация пройдена");
+                else
+                    MessageBox.Show("Неверный пароль");
+            }
+            else
+            {
+                MessageBox.Show("Авторизация не пройдена");
+            }
             var timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
             timer.Tick += Timer_Tick;
             timer.Start();

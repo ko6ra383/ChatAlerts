@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using ChatAlerts.Views;
+using System.Windows;
 
 namespace ChatAlerts
 {
@@ -6,7 +7,10 @@ namespace ChatAlerts
     {
         public MainWindow()
         {
+            
             InitializeComponent();
+            
+
         }
     }
 }
