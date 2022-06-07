@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ChatAlerts.Models
+namespace AspServer.Models
 {
     public class ChatUser
     {

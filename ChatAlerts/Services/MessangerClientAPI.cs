@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ChatAlerts.Models;
 using Newtonsoft.Json;
 using ChatAlerts.Models;
+using System.Collections.Generic;
 
 namespace ChatAlerts.Services
 {
@@ -89,6 +90,26 @@ namespace ChatAlerts.Services
             dataStream.Close();
             response.Close();
             return int.Parse(responseFromServer);
+        }
+
+        public IEnumerable<Chat> GetChats(int id)
+        {
+            WebRequest request = WebRequest.Create("http://localhost:5000/Chats/" + id.ToString());
+            request.Method = "GET";
+            WebResponse response = request.GetResponse();
+            string status = ((HttpWebResponse)response).StatusDescription;
+            Stream dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            if (status.ToLower() == "ok" && responseFromServer != "Not found")
+            {
+                IEnumerable<Chat> deserializatedChats = JsonConvert.DeserializeObject<IEnumerable<Chat>>(responseFromServer);
+                return deserializatedChats;
+            }
+            return null;
         }
     }
 }

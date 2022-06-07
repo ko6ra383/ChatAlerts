@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="900" Background="#40444B" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
-        <vm:MainViewModel />
+        <vm:MainViewModel/>
     </Window.DataContext>
     <Window.Resources>
         
@@ -19,7 +19,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Column="0" ItemsSource="{Binding testlist}" FontSize="20" Style="{StaticResource GroupsTemplate}" ItemContainerStyle="{StaticResource GroupsItemTemplate}"/>
+        <ListBox Grid.Column="0" DisplayMemberPath="Name" ItemsSource="{Binding Chats}" FontSize="20" Style="{StaticResource GroupsTemplate}" ItemContainerStyle="{StaticResource GroupsItemTemplate}"/>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>

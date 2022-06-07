@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AspServer
+namespace AspServer.Models
 {
     [Serializable]
     public class Message
