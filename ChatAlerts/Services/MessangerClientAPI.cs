@@ -70,7 +70,7 @@ namespace ChatAlerts.Services
             response.Close();
             return true;
         }
-        public bool CheckUser(User user = null)
+        public int CheckUser(User user)
         {
             WebRequest request = WebRequest.Create("http://localhost:5000/api/Messanger/CheckUser");
             request.Method = "POST";
@@ -88,7 +88,7 @@ namespace ChatAlerts.Services
             reader.Close();
             dataStream.Close();
             response.Close();
-            return bool.Parse(responseFromServer);
+            return int.Parse(responseFromServer);
         }
     }
 }

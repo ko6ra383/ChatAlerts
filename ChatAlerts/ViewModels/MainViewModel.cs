@@ -26,6 +26,16 @@ namespace ChatAlerts.ViewModels
             get => _messangeList;
             set => Set(ref _messangeList, value);
         }
+
+        #region User
+        private User _mainUser;
+        public User mainUser
+        {
+            get => _mainUser;
+            set => Set(ref _mainUser, value);
+        }
+        #endregion
+
         #endregion
         #region testlist
         public List<string> testlist { get; set; } = Enumerable.Range(1, 30).Select(i => $"тестовая строка N{i}").ToList();
@@ -62,25 +72,26 @@ namespace ChatAlerts.ViewModels
         }
         public MainViewModel()
         {
-            EnterWin enterWindow = new EnterWin();
-            if (enterWindow.ShowDialog() == true)
-            {
-                var user = new User()
-                {
-                    ID = 2,
-                    Login = enterWindow.Login,
-                    Password = enterWindow.Password,
-                    IsAdmin = enterWindow.Login == "admin" ? true : false
-                };
-                if (API.CheckUser(user))
-                    MessageBox.Show("Авторизация пройдена");
-                else
-                    MessageBox.Show("Неверный пароль");
-            }
-            else
-            {
-                MessageBox.Show("Авторизация не пройдена");
-            }
+            //EnterWin enterWindow = new EnterWin();
+            //if (enterWindow.ShowDialog() == true)
+            //{
+            //    mainUser = new User()
+            //    {
+            //        ID = 228,
+            //        Login = enterWindow.Login,
+            //        Password = enterWindow.Password,
+            //        IsAdmin = enterWindow.Login == "admin" ? true : false
+            //    };
+            //    mainUser.ID = API.CheckUser(mainUser);
+            //    if (mainUser.ID != -1)
+            //        MessageBox.Show("Авторизация пройдена");
+            //    else
+            //        MessageBox.Show("Неверный пароль");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Авторизация не пройдена");
+            //}
             var timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
             timer.Tick += Timer_Tick;
             timer.Start();

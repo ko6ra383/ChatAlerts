@@ -43,12 +43,12 @@ namespace AspServer.Controllers
         }
 
         [HttpPost]
-        public bool CheckUser([FromBody] User user)
+        public int CheckUser([FromBody] User user)
         {
             IEnumerable<User> usersList = db.users;
-            var res = usersList.Where(usr => usr.Login == user.Login && usr.Password == user.Password);
-            if (res.Count() != 1) return false;
-            return true;
+            var res = usersList.Where(usr => usr.Login == user.Login && usr.Password == user.Password).ToArray();
+            if (res.Count() != 1) return -1;
+            else return res[0].ID;
         }
     }
 }
