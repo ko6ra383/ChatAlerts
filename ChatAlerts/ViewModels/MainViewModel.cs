@@ -43,6 +43,14 @@ namespace ChatAlerts.ViewModels
             set => Set(ref _Chats, value);
         }
         #endregion
+        #region SelectedChat
+        private Chat _SelectedChat;
+        public Chat SelectedChat
+        {
+            get => _SelectedChat;
+            set => Set(ref _SelectedChat, value);
+        }
+        #endregion
 
         #endregion
         #region testlist
@@ -91,15 +99,15 @@ namespace ChatAlerts.ViewModels
                     IsAdmin = enterWindow.Login == "admin" ? true : false
                 };
                 mainUser.ID = API.CheckUser(mainUser);
-                if (mainUser.ID != -1)
-                    MessageBox.Show("Авторизация пройдена");
-                else
-                    MessageBox.Show("Неверный пароль");
+                //if (mainUser.ID != -1)
+                //    MessageBox.Show("Авторизация пройдена");
+                //else
+                //    MessageBox.Show("Неверный пароль");
             }
-            else
-            {
-                MessageBox.Show("Авторизация не пройдена");
-            }
+            //else
+            //{
+            //    MessageBox.Show("Авторизация не пройдена");
+            //}
             Chats = API.GetChats(mainUser.ID);
             var timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
             timer.Tick += Timer_Tick;

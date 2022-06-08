@@ -19,13 +19,20 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Column="0" DisplayMemberPath="Name" ItemsSource="{Binding Chats}" FontSize="20" Style="{StaticResource GroupsTemplate}" ItemContainerStyle="{StaticResource GroupsItemTemplate}"/>
+        <ListBox Grid.Column="0" FontSize="20"
+                 DisplayMemberPath="Name" ItemsSource="{Binding Chats}"
+                 SelectedItem="{Binding SelectedChat}"
+                 Style="{StaticResource GroupsTemplate}"
+                 ItemContainerStyle="{StaticResource GroupsItemTemplate}"/>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <ListBox FontSize="17" Grid.Row="0" ItemsSource="{Binding testlist}" Style="{StaticResource MessangesTemplate}" ItemContainerStyle="{StaticResource MessangesItemTemplate}"/>
+            <ListBox FontSize="17" Grid.Row="0"
+                     ItemsSource="{Binding testlist}"
+                     Style="{StaticResource MessangesTemplate}"
+                     ItemContainerStyle="{StaticResource MessangesItemTemplate}"/>
             <Separator Grid.Row="0" VerticalAlignment="Bottom" Foreground="lightgray"/>
             <Grid Grid.Row="1" Margin="15 5">
                 <Grid.ColumnDefinitions>
