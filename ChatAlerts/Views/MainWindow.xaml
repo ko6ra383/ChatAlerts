@@ -4,14 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
-        xmlns:local="clr-namespace:ChatAlerts" xmlns:vm="clr-namespace:ChatAlerts.ViewModels"
+        xmlns:local="clr-namespace:ChatAlerts"
+        xmlns:vm="clr-namespace:ChatAlerts.ViewModels"
+        xmlns:con="clr-namespace:ChatAlerts.Infrastructure.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="900" Background="#40444B" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
     <Window.Resources>
-        
+        <con:MessageToStringConverter x:Key="msgConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,11 +32,21 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            
+
             <ListBox FontSize="17" Grid.Row="0"
-                     ItemsSource="{Binding testlist}"
+                     ItemsSource="{Binding Messanges}"
                      Style="{StaticResource MessangesTemplate}"
-                     ItemContainerStyle="{StaticResource MessangesItemTemplate}"/>
+                     ItemContainerStyle="{StaticResource MessangesItemTemplate}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding UserID}"/>
+                            <TextBlock Text="{Binding TimeStamp}"/>
+                            <TextBlock Text="{Binding MessageText}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             
             <Separator Grid.Row="0" VerticalAlignment="Bottom" Foreground="lightgray"/>
             

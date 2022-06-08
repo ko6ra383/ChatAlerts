@@ -8,7 +8,6 @@ using AspServer.Models;
 
 namespace AspServer.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
     public class Messanger : ControllerBase
     {
@@ -17,32 +16,30 @@ namespace AspServer.Controllers
         {
             this.db = db;
         }
-        //static List<Message> ListOfMessages = new List<Message>();
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    string output = "Not found";
-        //    if ((id < ListOfMessages.Count) && (id >= 0))
-        //    {
-        //        output = JsonConvert.SerializeObject(ListOfMessages[id]);
-        //    }
-        //    Console.WriteLine($"Зпрошено сообщение N{id} : {output}");
-        //    return output;
-        //}
 
-        //[HttpPost]
-        //public IActionResult SendMessage([FromBody] Message msg)
-        //{
-        //    if (msg == null)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    ListOfMessages.Add(msg);
-        //    Console.WriteLine($"Всего сообщений: {ListOfMessages.Count} Посланное сообщение {msg}");
-        //    return new OkResult();
-        //}
+        [HttpGet]
+        [Route("ChatMessenges/{chatID}")]
+        public IEnumerable<Message> Get(int chatID)
+        {
+            return db.Messages.Where(x => x.ChatID == chatID);
+        }
 
         [HttpPost]
+        [Route("Send")]
+        public IActionResult SendMessage([FromBody] Message msg)
+        {
+            if (msg == null)
+            {
+                return BadRequest();
+            }
+            db.Messages.Add(msg);
+            db.SaveChanges();
+            Console.WriteLine($"Всего сообщений: {db.Messages.Count()} Посланное сообщение: {msg.MessageText}");
+            return new OkResult();
+        }
+
+        [HttpPost]
+        [Route("Check")]
         public int CheckUser([FromBody] User user)
         {
             IEnumerable<User> usersList = db.users;
@@ -50,8 +47,13 @@ namespace AspServer.Controllers
             if (res.Count() != 1) return -1;
             else return res[0].ID;
         }
-
-
-
+        [HttpGet]
+        [Route("Chats/{id}")]
+        public IEnumerable<Chat> GetChats(int id)
+        {
+            var chatsID = db.chatUsers.Where(x => x.UserID == id);
+            var chats = db.chats.Where(c => chatsID.Any(x => x.ChatID == c.Id));
+            return chats;
+        }
     }
 }

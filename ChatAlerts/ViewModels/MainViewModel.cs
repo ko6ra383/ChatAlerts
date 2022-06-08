@@ -51,6 +51,22 @@ namespace ChatAlerts.ViewModels
             set => Set(ref _SelectedChat, value);
         }
         #endregion
+        #region Messanges
+        private IEnumerable<Message> _Messanges;
+        public IEnumerable<Message> Messanges
+        {
+            get => _Messanges;
+            set => Set(ref _Messanges, value);
+        }
+        #endregion
+        #region SelectedMessange
+        private Message _SelectedMessange;
+        public Message SelectedMessange
+        {
+            get => _SelectedMessange;
+            set => Set(ref _SelectedMessange, value);
+        }
+        #endregion
 
         #endregion
         #region testlist
@@ -61,14 +77,19 @@ namespace ChatAlerts.ViewModels
         private bool CanSendMessageCommandExecute(object p) => true;
         private void OnSendMessageCommandExecute(object p)
         {
-            //string UserName = "test";
-            //if (!(p is string msgText)) return;
-            //string Message = msgText;
-            //if (UserName.Length > 1 && Message.Length > 1)
-            //{
-            //    Message msg = new Message(UserName, Message, DateTime.Now);
-            //    API.SendMessage(msg);
-            //}
+            if (!(p is string msgText)) return;
+            string Message = msgText;
+            if (Message.Length > 1)
+            {
+                Message msg = new Message
+                {
+                    MessageText = Message,
+                    ChatID = SelectedChat.Id,
+                    UserID = mainUser.ID,
+                    TimeStamp = DateTime.Now
+                };
+                API.SendMessage(msg);
+            }
         }
         #endregion
         private void Timer_Tick(object sender, EventArgs e)
@@ -85,6 +106,7 @@ namespace ChatAlerts.ViewModels
             //    }
             //});
             //asnk.Invoke();
+            Messanges = API.GetMessage(SelectedChat?.Id);
         }
         public MainViewModel()
         {
