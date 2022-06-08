@@ -61,30 +61,30 @@ namespace ChatAlerts.ViewModels
         private bool CanSendMessageCommandExecute(object p) => true;
         private void OnSendMessageCommandExecute(object p)
         {
-            string UserName = "test";
-            if (!(p is string msgText)) return;
-            string Message = msgText;
-            if (UserName.Length > 1 && Message.Length > 1)
-            {
-                Message msg = new Message(UserName, Message, DateTime.Now);
-                API.SendMessage(msg);
-            }
+            //string UserName = "test";
+            //if (!(p is string msgText)) return;
+            //string Message = msgText;
+            //if (UserName.Length > 1 && Message.Length > 1)
+            //{
+            //    Message msg = new Message(UserName, Message, DateTime.Now);
+            //    API.SendMessage(msg);
+            //}
         }
         #endregion
         private void Timer_Tick(object sender, EventArgs e)
         {
-            var asnk = new Func<Task>(async () =>
-            {
-                Message msg = await API.GetMessageAsync(MessageID);
-                while (msg != null)
-                {
-                    messangeList.Add(msg);
-                    OnPropertyChanged("messangeList");
-                    MessageID++;
-                    msg = API.GetMessage(MessageID);
-                }
-            });
-            asnk.Invoke();
+            //var asnk = new Func<Task>(async () =>
+            //{
+            //    Message msg = await API.GetMessageAsync(MessageID);
+            //    while (msg != null)
+            //    {
+            //        messangeList.Add(msg);
+            //        OnPropertyChanged("messangeList");
+            //        MessageID++;
+            //        msg = API.GetMessage(MessageID);
+            //    }
+            //});
+            //asnk.Invoke();
         }
         public MainViewModel()
         {

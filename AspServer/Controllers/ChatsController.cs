@@ -15,6 +15,7 @@ namespace AspServer.Controllers
         {
             this.db = db;
         }
+
         [Route("Chats/{id}")]
         public IEnumerable<Chat> GetChats(int id)
         {

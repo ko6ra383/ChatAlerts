@@ -24,24 +24,33 @@
                  SelectedItem="{Binding SelectedChat}"
                  Style="{StaticResource GroupsTemplate}"
                  ItemContainerStyle="{StaticResource GroupsItemTemplate}"/>
+        
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
+            
             <ListBox FontSize="17" Grid.Row="0"
                      ItemsSource="{Binding testlist}"
                      Style="{StaticResource MessangesTemplate}"
                      ItemContainerStyle="{StaticResource MessangesItemTemplate}"/>
+            
             <Separator Grid.Row="0" VerticalAlignment="Bottom" Foreground="lightgray"/>
+            
             <Grid Grid.Row="1" Margin="15 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="msgString"  Grid.Column="0" MinWidth="600" Width="auto" Style="{StaticResource MessageTextBoxStyle}" HorizontalAlignment="Left" Margin="-10 0 0 0"/>
-                <Button Grid.Column="1"  Style="{StaticResource SendButton}" Height="20" Width="30"
-                        Command="{Binding SendMessageCommand}" CommandParameter="{Binding Path=Text, ElementName=msgString}"/>
+                <TextBox x:Name="msgString"  Grid.Column="0" MinWidth="600" Width="auto"
+                         Style="{StaticResource MessageTextBoxStyle}"
+                         HorizontalAlignment="Left" Margin="-10 0 0 0"/>
+                
+                <Button Grid.Column="1" Height="20" Width="30"
+                        Style="{StaticResource SendButton}" 
+                        Command="{Binding SendMessageCommand}"
+                        CommandParameter="{Binding Path=Text, ElementName=msgString}"/>
             </Grid>
         </Grid>
         <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="3" Background="LightGray"/>
