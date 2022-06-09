@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatAlerts.Views"
         mc:Ignorable="d"
-        Title="EnterWin" Height="250" Width="300" WindowStartupLocation="CenterScreen"
+        Title="ChatAlerts" Height="250" Width="300" WindowStartupLocation="CenterScreen"
         Background="SlateGray">
     <Grid Margin="10">
         <Grid.RowDefinitions>

@@ -79,6 +79,7 @@ namespace ChatAlerts.ViewModels
         public List<string> testlist { get; set; } = Enumerable.Range(1, 30).Select(i => $"тестовая строка N{i}").ToList();
         #endregion
         #region Команды
+        #region SendMessageCommand
         public ICommand SendMessageCommand { get; }
         private bool CanSendMessageCommandExecute(object p) => true;
         private void OnSendMessageCommandExecute(object p)
@@ -97,6 +98,15 @@ namespace ChatAlerts.ViewModels
                 API.SendMessage(msg);
             }
         }
+        #endregion
+        #region AdminPanelCommand
+        public ICommand AdminPanelCommand { get; }
+        private bool CanAdminPanelCommandExecute(object p) => true;
+        private void OnAdminPanelCommandExecute(object p)
+        {
+            
+        }
+        #endregion
         #endregion
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -143,6 +153,7 @@ namespace ChatAlerts.ViewModels
             timer.Start();
             #region Команды
             SendMessageCommand = new LambdaCommand(OnSendMessageCommandExecute, CanSendMessageCommandExecute);
+            AdminPanelCommand = new LambdaCommand(OnAdminPanelCommandExecute, CanAdminPanelCommandExecute);
             #endregion
         }
 
