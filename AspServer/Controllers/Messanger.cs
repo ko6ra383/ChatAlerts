@@ -55,5 +55,13 @@ namespace AspServer.Controllers
             var chats = db.chats.Where(c => chatsID.Any(x => x.ChatID == c.Id));
             return chats;
         }
+        [HttpGet]
+        [Route("UsersInGroup/{chatID}")]
+        public IEnumerable<User> GetUsers(int chatID)
+        {
+            var chatsID = db.chatUsers.Where(x => x.ChatID == chatID);
+            var users = db.users.Where(c => chatsID.Any(x => x.UserID == c.ID));
+            return users;
+        }
     }
 }

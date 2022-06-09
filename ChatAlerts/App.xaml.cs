@@ -13,5 +13,10 @@ namespace ChatAlerts
     /// </summary>
     public partial class App : Application
     {
+        public static bool IsDesingnMode { get; private set; } = true;
+        protected override async void OnStartup(StartupEventArgs e)
+        {
+            IsDesingnMode = false;
+        }
     }
 }

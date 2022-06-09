@@ -93,9 +93,9 @@ namespace ChatAlerts.Services
             return int.Parse(responseFromServer);
         }
 
-        public IEnumerable<Chat> GetChats(int id)
+        public IEnumerable<Chat> GetChats(int userID)
         {
-            WebRequest request = WebRequest.Create("http://localhost:5000/Chats/" + id.ToString());
+            WebRequest request = WebRequest.Create("http://localhost:5000/Chats/" + userID.ToString());
             request.Method = "GET";
             WebResponse response = request.GetResponse();
             string status = ((HttpWebResponse)response).StatusDescription;
@@ -108,6 +108,25 @@ namespace ChatAlerts.Services
             if (status.ToLower() == "ok" && responseFromServer != "Not found")
             {
                 IEnumerable<Chat> deserializatedChats = JsonConvert.DeserializeObject<IEnumerable<Chat>>(responseFromServer);
+                return deserializatedChats;
+            }
+            return null;
+        }
+        public IEnumerable<User> GetUsers(int chatID)
+        {
+            WebRequest request = WebRequest.Create("http://localhost:5000/UsersInGroup/" + chatID.ToString());
+            request.Method = "GET";
+            WebResponse response = request.GetResponse();
+            string status = ((HttpWebResponse)response).StatusDescription;
+            Stream dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            if (status.ToLower() == "ok" && responseFromServer != "Not found")
+            {
+                IEnumerable<User> deserializatedChats = JsonConvert.DeserializeObject<IEnumerable<User>>(responseFromServer);
                 return deserializatedChats;
             }
             return null;

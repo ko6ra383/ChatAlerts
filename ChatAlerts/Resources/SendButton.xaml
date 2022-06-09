@@ -17,9 +17,6 @@
                         <fa:FontAwesome x:Name="ico" Height="15" Icon="Solid_PaperPlane" Foreground="Black" FontSize="18"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Button.IsDefaulted" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="ico" Property="Foreground" Value="LightGray" />
                         </Trigger>
