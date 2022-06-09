@@ -64,6 +64,7 @@ namespace ChatAlerts.ViewModels
             set => Set(ref _SelectedMessange, value);
         }
         #endregion
+
         #region UsersInGroup
         private IEnumerable<User> _UsersInChat;
         public IEnumerable<User> UsersInChat
@@ -128,15 +129,13 @@ namespace ChatAlerts.ViewModels
                         IsAdmin = enterWindow.Login == "admin" ? true : false
                     };
                     mainUser.ID = API.CheckUser(mainUser);
-                    //if (mainUser.ID != -1)
-                    //    MessageBox.Show("Авторизация пройдена");
-                    //else
-                    //    MessageBox.Show("Неверный пароль");
+                    if (mainUser.ID == -1)
+                        Application.Current.Shutdown();
                 }
-                //else
-                //{
-                //    MessageBox.Show("Авторизация не пройдена");
-                //}
+                else
+                {
+                    Application.Current.Shutdown();
+                }
             }
             Chats = API.GetChats(mainUser.ID);
             var timer = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };

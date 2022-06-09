@@ -79,7 +79,7 @@
         <Setter Property="OverridesDefaultStyle"
           Value="true" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
-          Value="Hidden" />
+          Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
           Value="Auto" />
         <Setter Property="ScrollViewer.CanContentScroll"
@@ -140,6 +140,7 @@
           Value="true" />
         <Setter Property="OverridesDefaultStyle"
           Value="true" />
+        <Setter Property="Margin" Value="10 5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
