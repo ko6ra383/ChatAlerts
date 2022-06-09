@@ -4,14 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
-        xmlns:local="clr-namespace:ChatAlerts" xmlns:vm="clr-namespace:ChatAlerts.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:ChatAlerts"
+        xmlns:vm="clr-namespace:ChatAlerts.ViewModels"
+        xmlns:con="clr-namespace:ChatAlerts.Infrastructure.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900" Background="#40444B" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="600" Width="900"
+        Background="#40444B" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
-        <vm:MainViewModel />
+        <vm:MainViewModel x:Name="mainVM"/>
     </Window.DataContext>
     <Window.Resources>
-        
+        <con:IdToUserName x:Key="userConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -19,22 +23,70 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Column="0" ItemsSource="{Binding testlist}" FontSize="20" Style="{StaticResource GroupsTemplate}" ItemContainerStyle="{StaticResource GroupsItemTemplate}"/>
+        <ListBox Grid.Column="0" FontSize="20"
+                 DisplayMemberPath="Name" ItemsSource="{Binding Chats}"
+                 SelectedItem="{Binding SelectedChat}"
+                 Style="{StaticResource GroupsTemplate}"
+                 ItemContainerStyle="{StaticResource GroupsItemTemplate}"/>
+        
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <ListBox FontSize="17" Grid.Row="0" ItemsSource="{Binding testlist}" Style="{StaticResource MessangesTemplate}" ItemContainerStyle="{StaticResource MessangesItemTemplate}"/>
+
+            <ListBox FontSize="17" Grid.Row="0"
+                     ItemsSource="{Binding Messanges}"
+                     SelectedItem="{Binding SelectedMessange}"
+                     Style="{StaticResource MessangesTemplate}"
+                     ItemContainerStyle="{StaticResource MessangesItemTemplate}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Margin" Value="5 0" />
+                                </Style>
+                            </StackPanel.Resources>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontWeight="DemiBold" FontSize="16">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource userConverter}">
+                                            <Binding Path="UserID" />
+                                            <Binding ElementName="mainVM" Path="UsersInChat"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Text="{Binding TimeStamp, StringFormat='HH:mm dd/MM/yy'}" FontSize="11"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding MessageText}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
             <Separator Grid.Row="0" VerticalAlignment="Bottom" Foreground="lightgray"/>
+            
             <Grid Grid.Row="1" Margin="15 5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="msgString"  Grid.Column="0" MinWidth="600" Width="auto" Style="{StaticResource MessageTextBoxStyle}" HorizontalAlignment="Left" Margin="-10 0 0 0"/>
-                <Button Grid.Column="1"  Style="{StaticResource SendButton}" Height="20" Width="30"
-                        Command="{Binding SendMessageCommand}" CommandParameter="{Binding Path=Text, ElementName=msgString}"/>
+                <TextBox x:Name="msgString" Grid.Column="0" Width="auto"
+                         MinWidth="{Binding Path=Width, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                         Style="{StaticResource MessageTextBoxStyle}"
+                         HorizontalAlignment="Left" Margin="-10 0 0 0">
+                </TextBox>
+
+                <Button Grid.Column="1" Height="20" Width="30" IsDefault="True" x:Name="sendBtn"
+                        Style="{StaticResource SendButton}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding SendMessageCommand}" CommandParameter="{Binding Path=Text, ElementName=msgString}"/>
+                            <i:ChangePropertyAction TargetName="msgString" PropertyName="Text" Value=""/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </Grid>
         </Grid>
         <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="3" Background="LightGray"/>

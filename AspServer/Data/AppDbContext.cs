@@ -7,8 +7,13 @@ namespace AspServer.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
+            
         }
         public DbSet<User> users { get; set; }
+        public DbSet<Chat> chats { get; set; }
+        public DbSet<ChatUser> chatUsers { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<MessangeStatus> MessangeStatuses { get; set; }
+        
     }
 }

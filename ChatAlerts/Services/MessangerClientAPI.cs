@@ -7,22 +7,24 @@ using System.Threading.Tasks;
 using ChatAlerts.Models;
 using Newtonsoft.Json;
 using ChatAlerts.Models;
+using System.Collections.Generic;
 
 namespace ChatAlerts.Services
 {
     public class MessangerClientAPI
     {
-        public void TestJson()
+        //public void TestJson()
+        //{
+        //    Message msg = new Message("Sas", "privet", DateTime.UtcNow);
+        //    string output = JsonConvert.SerializeObject(msg);
+        //    Console.WriteLine(output);
+        //    Message des = JsonConvert.DeserializeObject<Message>(output);
+        //    Console.WriteLine(des);
+        //}
+        public IEnumerable<Message> GetMessage(int? chatID)
         {
-            Message msg = new Message("Sas", "privet", DateTime.UtcNow);
-            string output = JsonConvert.SerializeObject(msg);
-            Console.WriteLine(output);
-            Message des = JsonConvert.DeserializeObject<Message>(output);
-            Console.WriteLine(des);
-        }
-        public Message GetMessage(int MessageID)
-        {
-            WebRequest request = WebRequest.Create("http://localhost:5000/api/Messanger/Get" + MessageID.ToString());
+            if (chatID == null) return null;
+            WebRequest request = WebRequest.Create("http://localhost:5000/ChatMessenges/" + chatID.ToString());
             request.Method = "GET";
             WebResponse response = request.GetResponse();
             string status = ((HttpWebResponse)response).StatusDescription;
@@ -34,25 +36,25 @@ namespace ChatAlerts.Services
             response.Close();
             if (status.ToLower() == "ok" && responseFromServer != "Not found")
             {
-                Message deserializatedMsg = JsonConvert.DeserializeObject<Message>(responseFromServer);
-                return deserializatedMsg;
+                IEnumerable<Message> deserializatedMsgs = JsonConvert.DeserializeObject<IEnumerable<Message>>(responseFromServer);
+                return deserializatedMsgs;
             }
             return null;
         }
-        private static readonly HttpClient client = new HttpClient();
-        public async Task<Message> GetMessageAsync(int MessageID)
-        {
-            var responseString = await client.GetStringAsync("http://localhost:5000/api/Messanger/Get" + MessageID.ToString());
-            if (responseString != null)
-            {
-                Message deserializedMsg = JsonConvert.DeserializeObject<Message>(responseString);
-                return deserializedMsg;
-            }
-            return null;
-        }
+        //private static readonly HttpClient client = new HttpClient();
+        //public async Task<Message> GetMessageAsync(int MessageID)
+        //{
+        //    var responseString = await client.GetStringAsync("http://localhost:5000/ChatMessenges/" + MessageID.ToString());
+        //    if (responseString != null)
+        //    {
+        //        Message deserializedMsg = JsonConvert.DeserializeObject<Message>(responseString);
+        //        return deserializedMsg;
+        //    }
+        //    return null;
+        //}
         public bool SendMessage(Message msg)
         {
-            WebRequest request = WebRequest.Create("http://localhost:5000/api/Messanger/SendMessage");
+            WebRequest request = WebRequest.Create("http://localhost:5000/Send");
             request.Method = "POST";
             string postData = JsonConvert.SerializeObject(msg);
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
@@ -70,9 +72,9 @@ namespace ChatAlerts.Services
             response.Close();
             return true;
         }
-        public bool CheckUser(User user = null)
+        public int CheckUser(User user)
         {
-            WebRequest request = WebRequest.Create("http://localhost:5000/api/Messanger/CheckUser");
+            WebRequest request = WebRequest.Create("http://localhost:5000/Check");
             request.Method = "POST";
             string postData = JsonConvert.SerializeObject(user);
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
@@ -88,7 +90,46 @@ namespace ChatAlerts.Services
             reader.Close();
             dataStream.Close();
             response.Close();
-            return bool.Parse(responseFromServer);
+            return int.Parse(responseFromServer);
+        }
+
+        public IEnumerable<Chat> GetChats(int userID)
+        {
+            WebRequest request = WebRequest.Create("http://localhost:5000/Chats/" + userID.ToString());
+            request.Method = "GET";
+            WebResponse response = request.GetResponse();
+            string status = ((HttpWebResponse)response).StatusDescription;
+            Stream dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            if (status.ToLower() == "ok" && responseFromServer != "Not found")
+            {
+                IEnumerable<Chat> deserializatedChats = JsonConvert.DeserializeObject<IEnumerable<Chat>>(responseFromServer);
+                return deserializatedChats;
+            }
+            return null;
+        }
+        public IEnumerable<User> GetUsers(int chatID)
+        {
+            WebRequest request = WebRequest.Create("http://localhost:5000/UsersInGroup/" + chatID.ToString());
+            request.Method = "GET";
+            WebResponse response = request.GetResponse();
+            string status = ((HttpWebResponse)response).StatusDescription;
+            Stream dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            if (status.ToLower() == "ok" && responseFromServer != "Not found")
+            {
+                IEnumerable<User> deserializatedChats = JsonConvert.DeserializeObject<IEnumerable<User>>(responseFromServer);
+                return deserializatedChats;
+            }
+            return null;
         }
     }
 }

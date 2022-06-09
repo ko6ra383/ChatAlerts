@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ChatAlerts.Models
+namespace AspServer.Models
 {
     [Serializable]
     public class Message
