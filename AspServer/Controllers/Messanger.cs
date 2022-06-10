@@ -42,10 +42,53 @@ namespace AspServer.Controllers
         [Route("Check")]
         public int CheckUser([FromBody] User user)
         {
-            IEnumerable<User> usersList = db.users;
-            var res = usersList.Where(usr => usr.Login == user.Login && usr.Password == user.Password).ToArray();
-            if (res.Count() != 1) return -1;
+            var res = db.users.Where(usr => usr.Login == user.Login && usr.Password == user.Password).ToArray();
+            if (res.Length != 1) return -1;
             else return res[0].ID;
+        }
+        [HttpGet]
+        [Route("GetChatID/{name}")]
+        public int GetChatID(string name)
+        {
+            var res = db.chats.Where(usr => usr.Name == name).ToArray();
+            if (res.Length != 1) return -1;
+            else return res[0].Id;
+        }
+        [HttpGet]
+        [Route("GetUserID/{name}")]
+        public int GetUserID(string name)
+        {
+            var res = db.users.Where(usr => usr.Login == name).ToArray();
+            if (res.Length != 1) return -1;
+            else return res[0].ID;
+        }
+        [HttpPost]
+        [Route("AddUser")]
+        public int AddUser([FromBody] User user)
+        {
+            var res = db.users.Where(usr => usr.Login == user.Login).ToArray();
+            if (res.Length > 0) return -1;
+            db.users.Add(user);
+            db.SaveChanges();
+            return 1;
+        }
+        [Route("AddChat")]
+        public int AddChat([FromBody] Chat chat)
+        {
+            var res = db.chats.Where(cu => cu.Name == chat.Name).ToArray();
+            if (res.Length > 0) return -1;
+            db.chats.Add(chat);
+            db.SaveChanges();
+            return 1;
+        }
+        [Route("AddChatUser")]
+        public int AddChatUser([FromBody] ChatUser chatUser)
+        {
+            var res = db.chatUsers.Where(cu => cu.ChatID == chatUser.ChatID && cu.UserID == chatUser.UserID).ToArray();
+            if (res.Length > 0) return -1;
+            db.chatUsers.Add(chatUser);
+            db.SaveChanges();
+            return 1;
         }
         [HttpGet]
         [Route("Chats/{id}")]

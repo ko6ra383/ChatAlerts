@@ -104,7 +104,7 @@ namespace ChatAlerts.ViewModels
         private bool CanAdminPanelCommandExecute(object p) => true;
         private void OnAdminPanelCommandExecute(object p)
         {
-            
+            new AdminPanelWin().Show();
         }
         #endregion
         #endregion
