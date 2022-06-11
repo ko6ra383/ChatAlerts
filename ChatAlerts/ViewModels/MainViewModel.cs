@@ -57,8 +57,8 @@ namespace ChatAlerts.ViewModels
         }
         #endregion
         #region SelectedMessange
-        private Message _SelectedMessange;
-        public Message SelectedMessange
+        private int _SelectedMessange;
+        public int SelectedMessange
         {
             get => _SelectedMessange;
             set => Set(ref _SelectedMessange, value);
@@ -79,6 +79,7 @@ namespace ChatAlerts.ViewModels
         public List<string> testlist { get; set; } = Enumerable.Range(1, 30).Select(i => $"тестовая строка N{i}").ToList();
         #endregion
         #region Команды
+        #region SendMessageCommand
         public ICommand SendMessageCommand { get; }
         private bool CanSendMessageCommandExecute(object p) => true;
         private void OnSendMessageCommandExecute(object p)
@@ -98,6 +99,15 @@ namespace ChatAlerts.ViewModels
             }
         }
         #endregion
+        #region AdminPanelCommand
+        public ICommand AdminPanelCommand { get; }
+        private bool CanAdminPanelCommandExecute(object p) => true;
+        private void OnAdminPanelCommandExecute(object p)
+        {
+            new AdminPanelWin().Show();
+        }
+        #endregion
+        #endregion
         private void Timer_Tick(object sender, EventArgs e)
         {
             //var asnk = new Func<Task>(async () =>
@@ -113,6 +123,7 @@ namespace ChatAlerts.ViewModels
             //});
             //asnk.Invoke();
             Messanges = API.GetMessage(SelectedChat?.Id);
+            //SelectedMessange = Messanges.Count()-1;
         }
         public MainViewModel()
         {
@@ -143,6 +154,7 @@ namespace ChatAlerts.ViewModels
             timer.Start();
             #region Команды
             SendMessageCommand = new LambdaCommand(OnSendMessageCommandExecute, CanSendMessageCommandExecute);
+            AdminPanelCommand = new LambdaCommand(OnAdminPanelCommandExecute, CanAdminPanelCommandExecute);
             #endregion
         }
 

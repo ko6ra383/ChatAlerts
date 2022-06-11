@@ -9,7 +9,7 @@
         xmlns:vm="clr-namespace:ChatAlerts.ViewModels"
         xmlns:con="clr-namespace:ChatAlerts.Infrastructure.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900"
+        Title="ChatAlerts" Height="600" Width="900"
         Background="#40444B" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:MainViewModel x:Name="mainVM"/>
@@ -27,8 +27,25 @@
                  DisplayMemberPath="Name" ItemsSource="{Binding Chats}"
                  SelectedItem="{Binding SelectedChat}"
                  Style="{StaticResource GroupsTemplate}"
-                 ItemContainerStyle="{StaticResource GroupsItemTemplate}"/>
-        
+                 ItemContainerStyle="{StaticResource GroupsItemTemplate}">
+            <ListBox.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource coolScrollBar}"/>
+            </ListBox.Resources>
+        </ListBox>
+
+        <Button Grid.Column="0" Content="Админ панель" Command="{Binding AdminPanelCommand}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource AdminPanelButton}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding mainUser.IsAdmin}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                
+            </Button.Style>
+        </Button>
+
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -37,9 +54,12 @@
 
             <ListBox FontSize="17" Grid.Row="0"
                      ItemsSource="{Binding Messanges}"
-                     SelectedItem="{Binding SelectedMessange}"
+                     SelectedIndex="{Binding SelectedMessange}"
                      Style="{StaticResource MessangesTemplate}"
                      ItemContainerStyle="{StaticResource MessangesItemTemplate}">
+                <ListBox.Resources>
+                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource coolScrollBar}"/>
+                </ListBox.Resources>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
