@@ -57,8 +57,8 @@ namespace ChatAlerts.ViewModels
         }
         #endregion
         #region SelectedMessange
-        private Message _SelectedMessange;
-        public Message SelectedMessange
+        private int _SelectedMessange;
+        public int SelectedMessange
         {
             get => _SelectedMessange;
             set => Set(ref _SelectedMessange, value);
@@ -123,6 +123,7 @@ namespace ChatAlerts.ViewModels
             //});
             //asnk.Invoke();
             Messanges = API.GetMessage(SelectedChat?.Id);
+            //SelectedMessange = Messanges.Count()-1;
         }
         public MainViewModel()
         {

@@ -27,7 +27,11 @@
                  DisplayMemberPath="Name" ItemsSource="{Binding Chats}"
                  SelectedItem="{Binding SelectedChat}"
                  Style="{StaticResource GroupsTemplate}"
-                 ItemContainerStyle="{StaticResource GroupsItemTemplate}"/>
+                 ItemContainerStyle="{StaticResource GroupsItemTemplate}">
+            <ListBox.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource coolScrollBar}"/>
+            </ListBox.Resources>
+        </ListBox>
 
         <Button Grid.Column="0" Content="Админ панель" Command="{Binding AdminPanelCommand}">
             <Button.Style>
@@ -50,9 +54,12 @@
 
             <ListBox FontSize="17" Grid.Row="0"
                      ItemsSource="{Binding Messanges}"
-                     SelectedItem="{Binding SelectedMessange}"
+                     SelectedIndex="{Binding SelectedMessange}"
                      Style="{StaticResource MessangesTemplate}"
                      ItemContainerStyle="{StaticResource MessangesItemTemplate}">
+                <ListBox.Resources>
+                    <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource coolScrollBar}"/>
+                </ListBox.Resources>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
